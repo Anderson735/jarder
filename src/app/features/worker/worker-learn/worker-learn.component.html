@@ -1,0 +1,95 @@
+@if (!course()) {
+  <p class="empty">Curso no disponible o no publicado.</p>
+  <a routerLink="/worker/catalog">Volver al catálogo</a>
+} @else {
+  <div class="layout">
+    <aside class="sidebar">
+      <a routerLink="/worker/catalog" class="back">← Catálogo</a>
+      <h1 class="course-title">{{ course()!.title }}</h1>
+
+      <h2 class="side-title">Sesiones</h2>
+      <ol class="sessions">
+        @for (s of course()!.sessions; track s.id) {
+          <li>
+            <button type="button" class="sess" [class.active]="s.id === activeId()" (click)="select(s.id)">
+              <span class="idx">{{ $index + 1 }}</span>
+              <span class="t">{{ s.title }}</span>
+              @if (progress.isSessionDone(course()!.id, s.id)) {
+                <span class="done">✓</span>
+              }
+            </button>
+          </li>
+        }
+      </ol>
+
+      @if (course()!.evaluations.length > 0) {
+        <div class="eval-block">
+          <h2 class="side-title">Evaluaciones</h2>
+          <ul class="eval-list">
+            @for (e of course()!.evaluations; track e.id) {
+              <li class="eval-row">
+                <a [routerLink]="['/worker/learn', course()!.id, 'examen', e.id]" class="eval-link">{{ e.title }}</a>
+                @if (evalPassed(e.id)) {
+                  <div class="eval-badges">
+                    <span class="badge-pass">Aprobado</span>
+                    <a class="cert-link" [routerLink]="['/worker/learn', course()!.id, 'certificado', e.id]"
+                      >Certificado</a
+                    >
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </aside>
+    <section class="content">
+      @if (activeSession(); as sess) {
+        <header>
+          <h2>{{ sess.title }}</h2>
+          <button type="button" class="btn" (click)="toggleDone(sess.id)">
+            {{ progress.isSessionDone(course()!.id, sess.id) ? 'Marcar pendiente' : 'Marcar completada' }}
+          </button>
+        </header>
+        @if (sess.description) {
+          <p class="desc">{{ sess.description }}</p>
+        }
+        <div class="materials">
+          @for (m of sess.materials; track m.id) {
+            <article class="block">
+              <h3>{{ m.title }}</h3>
+              @if (m.kind === 'video') {
+                @if (embedUrl(m); as embed) {
+                  <iframe
+                    class="media-frame"
+                    [src]="embed"
+                    title="video"
+                    width="100%"
+                    height="360"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  ></iframe>
+                } @else if (videoObjectUrl(m); as vu) {
+                  <video class="video-el" [src]="vu" controls width="100%"></video>
+                } @else if (m.externalUrl) {
+                  <p class="muted">
+                    Reproduce este vídeo desde la URL:
+                    <a [href]="m.externalUrl!" target="_blank" rel="noopener">{{ m.externalUrl }}</a>
+                  </p>
+                }
+              } @else if (m.kind === 'document') {
+                @if (docObjectUrl(m); as du) {
+                  <iframe class="doc-frame" [src]="du" width="100%" height="480"></iframe>
+                } @else if (m.externalUrl) {
+                  <a class="doclink" [href]="m.externalUrl!" target="_blank" rel="noopener">Abrir documento</a>
+                }
+              } @else if (m.kind === 'link' && m.externalUrl) {
+                <a class="doclink" [href]="m.externalUrl" target="_blank" rel="noopener">{{ m.externalUrl }}</a>
+              }
+            </article>
+          }
+        </div>
+      }
+    </section>
+  </div>
+}

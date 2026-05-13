@@ -1,0 +1,109 @@
+.back {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+h1 {
+  margin: 0.35rem 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.lead {
+  color: var(--color-muted);
+  margin: 0 0 1rem;
+}
+
+.meta {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  margin-bottom: 1.25rem;
+}
+
+.card {
+  margin: 0 0 1rem;
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.card legend {
+  font-weight: 600;
+  padding: 0 0.35rem;
+}
+
+.opts {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+}
+
+.opt {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-block;
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-size: 0.9rem;
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: #fff;
+}
+
+.btn.ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.result {
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.result.ok {
+  border-color: #0f766e;
+  background: rgba(15, 118, 110, 0.06);
+}
+
+.result.fail {
+  border-color: #b91c1c;
+  background: rgba(185, 28, 28, 0.06);
+}
+
+.result h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+}
+
+.score {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.empty {
+  color: var(--color-muted);
+}

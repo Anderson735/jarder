@@ -1,0 +1,55 @@
+@if (!course() || !evaluation()) {
+  <p class="empty">Evaluación no disponible.</p>
+  <a routerLink="/worker/catalog">Catálogo</a>
+} @else {
+  <a [routerLink]="['/worker/learn', course()!.id]" class="back">← Volver al curso</a>
+  <h1>{{ evaluation()!.title }}</h1>
+  @if (evaluation()!.description) {
+    <p class="lead">{{ evaluation()!.description }}</p>
+  }
+  <p class="meta">
+    Nota mínima para aprobar: <strong>{{ evaluation()!.passingScorePercent }}%</strong>
+  </p>
+
+  @if (!submitted) {
+    <form (ngSubmit)="submit()">
+      @for (q of evaluation()!.questions; track q.id; let i = $index) {
+        <fieldset class="card">
+          <legend>{{ i + 1 }}. {{ q.prompt }}</legend>
+          <div class="opts">
+            @for (opt of q.choices; track $index; let oi = $index) {
+              <label class="opt">
+                <input
+                  type="radio"
+                  [name]="q.id"
+                  [checked]="selectedOption(q) === oi"
+                  (change)="setAnswer(q, oi)"
+                />
+                <span>{{ opt }}</span>
+              </label>
+            }
+          </div>
+        </fieldset>
+      }
+      <button type="submit" class="btn primary">Enviar respuestas</button>
+    </form>
+  } @else {
+    <div class="result" [class.ok]="passed" [class.fail]="!passed">
+      <h2>{{ passed ? '¡Aprobaste!' : 'No aprobaste' }}</h2>
+      <p class="score">Tu puntuación: <strong>{{ scorePercent }}%</strong></p>
+      @if (passed) {
+        <p>Puedes descargar o imprimir tu certificado.</p>
+        <div class="actions">
+          <button type="button" class="btn primary" (click)="goCertificate()">Ver certificado</button>
+          <a class="btn ghost" [routerLink]="['/worker/learn', course()!.id]">Volver al curso</a>
+        </div>
+      } @else {
+        <p>Repasa el contenido e inténtalo de nuevo cuando quieras.</p>
+        <div class="actions">
+          <button type="button" class="btn primary" (click)="retry()">Intentar de nuevo</button>
+          <a class="btn ghost" [routerLink]="['/worker/learn', course()!.id]">Volver al curso</a>
+        </div>
+      }
+    </div>
+  }
+}

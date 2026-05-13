@@ -1,0 +1,26 @@
+<div class="head">
+  <h1>Cursos</h1>
+  <a class="btn primary" routerLink="/admin/courses/new">Nuevo curso</a>
+</div>
+@if (courses.allCourses().length === 0) {
+  <p class="empty">Aún no hay cursos. Crea el primero para definir sesiones, vídeos y materiales.</p>
+} @else {
+  <ul class="list">
+    @for (c of courses.allCourses(); track c.id) {
+      <li>
+        <div class="meta">
+          <a [routerLink]="['/admin/courses', c.id]" class="title">{{ c.title }}</a>
+          <span class="badge" [class.on]="c.published">{{ c.published ? 'Publicado' : 'Borrador' }}</span>
+        </div>
+        <p class="desc">{{ c.description || 'Sin descripción' }}</p>
+        <div class="foot">
+          <span>{{ c.sessions.length }} sesiones</span>
+          <div class="links">
+            <a [routerLink]="['/admin/courses', c.id]">Editar</a>
+            <button type="button" class="link danger" (click)="remove(c.id)">Eliminar</button>
+          </div>
+        </div>
+      </li>
+    }
+  </ul>
+}

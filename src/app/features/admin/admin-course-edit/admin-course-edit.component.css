@@ -1,0 +1,189 @@
+.head h1 {
+  margin: 0.25rem 0 0;
+  font-size: 1.35rem;
+}
+
+.back {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.panel {
+  margin-top: 1.25rem;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 560px;
+}
+
+label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+label.row {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+input,
+textarea {
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+.btn {
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-size: 0.85rem;
+}
+
+.btn.primary {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: #fff;
+  justify-self: start;
+}
+
+.btn.secondary {
+  background: var(--color-surface-2);
+  border-color: var(--color-border);
+  color: var(--color-text);
+}
+
+.btn.link-btn {
+  text-decoration: none;
+  text-align: center;
+}
+
+.btn.tiny {
+  padding: 0.25rem 0.45rem;
+  font-size: 0.75rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+}
+
+.btn.tiny.danger {
+  color: #b91c1c;
+}
+
+.btn.tiny.link {
+  text-decoration: none;
+  text-align: center;
+  color: #0369a1;
+}
+
+.row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.row-between h2 {
+  margin: 0;
+}
+
+.sessions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sessions li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  flex-wrap: wrap;
+}
+
+.session-main {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+}
+
+.order {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  min-width: 2rem;
+}
+
+.session-title {
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.session-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.muted.sm {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+}
+
+.empty {
+  color: var(--color-muted);
+}
+
+.eval-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.eval-list li {
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.eval-title {
+  font-weight: 600;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.eval-title:hover {
+  text-decoration: underline;
+}

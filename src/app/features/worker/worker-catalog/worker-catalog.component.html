@@ -1,0 +1,26 @@
+<h1>Catálogo de cursos</h1>
+<p class="lead">Los administradores publican aquí los cursos disponibles para tu equipo.</p>
+
+@if (courses.publishedCourses().length === 0) {
+  <p class="empty">No hay cursos publicados todavía.</p>
+} @else {
+  <div class="grid">
+    @for (c of courses.publishedCourses(); track c.id) {
+      <article class="card">
+        @if (c.thumbnailUrl) {
+          <img [src]="c.thumbnailUrl" alt="" class="thumb" />
+        } @else {
+          <div class="thumb placeholder"></div>
+        }
+        <div class="body">
+          <h2>{{ c.title }}</h2>
+          <p>{{ c.description || 'Sin descripción' }}</p>
+          <footer>
+            <span>{{ c.sessions.length }} sesiones</span>
+            <a [routerLink]="['/worker/learn', c.id]" class="cta">Ir al curso</a>
+          </footer>
+        </div>
+      </article>
+    }
+  </div>
+}

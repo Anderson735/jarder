@@ -1,0 +1,29 @@
+@if (!record()) {
+  <p class="empty">No hay constancia de esta evaluación.</p>
+  <a routerLink="/worker/catalog">Ir al catálogo</a>
+} @else if (!canShow()) {
+  <p class="empty">Solo se emite certificado si aprobaste la evaluación.</p>
+  <a [routerLink]="['/worker/learn', record()!.courseId, 'examen', record()!.evaluationId]">Ir al examen</a>
+} @else {
+  <div class="toolbar no-print">
+    <a [routerLink]="['/worker/learn', record()!.courseId]">← Volver al curso</a>
+    <button type="button" class="btn" (click)="print()">Imprimir / PDF</button>
+  </div>
+
+  <article class="certificate" id="certificado">
+    <header>
+      <p class="kicker">Certificado de aprovechamiento</p>
+      <h1>Jarder Academia</h1>
+    </header>
+    <p class="line">Se certifica que</p>
+    <p class="name">{{ record()!.userDisplayName }}</p>
+    <p class="line">ha completado satisfactoriamente la evaluación</p>
+    <p class="course">{{ record()!.evaluationTitle }}</p>
+    <p class="line">del curso <strong>{{ record()!.courseTitle }}</strong></p>
+    <p class="score">Puntuación obtenida: {{ record()!.scorePercent }}%</p>
+    <footer>
+      <p class="date">{{ formatDate(record()!.completedAt) }}</p>
+      <p class="sig">Firma digital del sistema (demo local)</p>
+    </footer>
+  </article>
+}

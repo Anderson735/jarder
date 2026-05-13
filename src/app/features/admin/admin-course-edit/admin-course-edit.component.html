@@ -1,0 +1,91 @@
+@if (!course()) {
+  <p class="empty">Curso no encontrado.</p>
+  <a routerLink="/admin/courses">Volver al listado</a>
+} @else {
+  <div class="head">
+    <div>
+      <a routerLink="/admin/courses" class="back">← Cursos</a>
+      <h1>{{ course()!.title }}</h1>
+    </div>
+  </div>
+
+  <section class="panel">
+    <h2>Datos del curso</h2>
+    <form class="form" (ngSubmit)="saveMeta()">
+      <label>
+        <span>Título</span>
+        <input [(ngModel)]="editTitle" name="editTitle" required />
+      </label>
+      <label>
+        <span>Descripción</span>
+        <textarea rows="4" [(ngModel)]="editDescription" name="editDescription"></textarea>
+      </label>
+      <label>
+        <span>Miniatura (URL opcional)</span>
+        <input [(ngModel)]="editThumb" name="editThumb" placeholder="https://..." />
+      </label>
+      <label class="row">
+        <input type="checkbox" [(ngModel)]="editPublished" name="editPublished" />
+        <span>Publicado en catálogo</span>
+      </label>
+      <button type="submit" class="btn primary">Guardar cambios</button>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="row-between">
+      <h2>Sesiones</h2>
+      <button type="button" class="btn secondary" (click)="addSession()">Añadir sesión</button>
+    </div>
+    @if (course()!.sessions.length === 0) {
+      <p class="muted">No hay sesiones. Añade la primera para subir vídeos y materiales.</p>
+    } @else {
+      <ol class="sessions">
+        @for (s of course()!.sessions; track s.id) {
+          <li>
+            <div class="session-main">
+              <span class="order">#{{ $index + 1 }}</span>
+              <div>
+                <a [routerLink]="['/admin/courses', course()!.id, 'sessions', s.id]" class="session-title">{{
+                  s.title
+                }}</a>
+                <p class="muted sm">{{ s.materials.length }} materiales</p>
+              </div>
+            </div>
+            <div class="session-actions">
+              <button type="button" class="btn tiny" [disabled]="$first" (click)="move(s.id, -1)">↑</button>
+              <button type="button" class="btn tiny" [disabled]="$last" (click)="move(s.id, 1)">↓</button>
+              <a class="btn tiny link" [routerLink]="['/admin/courses', course()!.id, 'sessions', s.id]">Editar</a>
+              <button type="button" class="btn tiny danger" (click)="removeSession(s.id)">Eliminar</button>
+            </div>
+          </li>
+        }
+      </ol>
+    }
+  </section>
+
+  <section class="panel">
+    <div class="row-between">
+      <h2>Evaluaciones</h2>
+      <a class="btn secondary link-btn" [routerLink]="['/admin/courses', course()!.id, 'evaluations', 'new']"
+        >Nueva evaluación</a
+      >
+    </div>
+    @if (course()!.evaluations.length === 0) {
+      <p class="muted">No hay evaluaciones. Crea cuestionarios para medir conocimientos y habilitar certificados.</p>
+    } @else {
+      <ul class="eval-list">
+        @for (e of course()!.evaluations; track e.id) {
+          <li>
+            <div>
+              <a [routerLink]="['/admin/courses', course()!.id, 'evaluations', e.id]" class="eval-title">{{
+                e.title
+              }}</a>
+              <p class="muted sm">{{ e.questions.length }} preguntas · Aprobación desde {{ e.passingScorePercent }}%</p>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+}

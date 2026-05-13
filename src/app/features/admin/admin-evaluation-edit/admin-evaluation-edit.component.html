@@ -1,0 +1,67 @@
+@if (!draft) {
+  <p class="empty">No se pudo cargar la evaluación.</p>
+  <a routerLink="/admin/courses">Volver</a>
+} @else {
+  <a [routerLink]="['/admin/courses', draft.courseId]" class="back">← {{ courseTitle() }}</a>
+  <h1>{{ isNew ? 'Nueva evaluación' : 'Editar evaluación' }}</h1>
+  <p class="hint">
+    Define preguntas de opción múltiple y la nota mínima para aprobar. Los trabajadores que aprueben podrán ver su
+    certificado.
+  </p>
+
+  <form class="panel" (ngSubmit)="save()">
+    <label>
+      <span>Título</span>
+      <input name="title" [(ngModel)]="draft.title" required />
+    </label>
+    <label>
+      <span>Descripción</span>
+      <textarea name="desc" rows="3" [(ngModel)]="draft.description"></textarea>
+    </label>
+    <label>
+      <span>Nota mínima para aprobar (%)</span>
+      <input
+        type="number"
+        name="pass"
+        min="0"
+        max="100"
+        [(ngModel)]="draft.passingScorePercent"
+      />
+    </label>
+
+    <h2>Preguntas</h2>
+    <button type="button" class="btn secondary" (click)="addQuestion()">Añadir pregunta</button>
+
+    @for (q of draft.questions; track q.id; let qi = $index) {
+      <fieldset class="question">
+        <legend>Pregunta {{ qi + 1 }}</legend>
+        <label>
+          <span>Enunciado</span>
+          <textarea rows="2" [(ngModel)]="q.prompt" [name]="'p' + q.id" required></textarea>
+        </label>
+        <div class="choices">
+          @for (opt of q.choices; track $index; let oi = $index) {
+            <label class="choice">
+              <span>Opción {{ oi + 1 }}</span>
+              <div class="choice-row">
+                <input type="radio" [name]="'ok' + q.id" [value]="oi" [(ngModel)]="q.correctIndex" />
+                <input type="text" [(ngModel)]="q.choices[oi]" [name]="'c' + q.id + '-' + oi" />
+              </div>
+            </label>
+          }
+        </div>
+        <p class="radio-hint">Marca el círculo junto a la opción correcta.</p>
+        @if (draft.questions.length > 1) {
+          <button type="button" class="btn danger" (click)="removeQuestion(q)">Eliminar pregunta</button>
+        }
+      </fieldset>
+    }
+
+    <div class="actions">
+      <button type="submit" class="btn primary">Guardar evaluación</button>
+      @if (!isNew) {
+        <button type="button" class="btn danger" (click)="removeEvaluation()">Eliminar evaluación</button>
+      }
+    </div>
+  </form>
+}

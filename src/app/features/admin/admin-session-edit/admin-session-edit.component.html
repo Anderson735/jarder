@@ -1,0 +1,69 @@
+@if (!session()) {
+  <p class="empty">Sesión no encontrada.</p>
+  <a [routerLink]="['/admin/courses', courseId()]">Volver al curso</a>
+} @else {
+  <a [routerLink]="['/admin/courses', courseId()]" class="back">← Curso</a>
+  <h1>Editar sesión</h1>
+
+  <form class="panel" (ngSubmit)="saveSession()">
+    <label>
+      <span>Título</span>
+      <input [(ngModel)]="title" name="title" required />
+    </label>
+    <label>
+      <span>Descripción</span>
+      <textarea rows="5" [(ngModel)]="description" name="description"></textarea>
+    </label>
+    <button type="submit" class="btn primary">Guardar sesión</button>
+  </form>
+
+  <section class="panel">
+    <h2>Materiales</h2>
+    <p class="hint">
+      Añade vídeo por URL (YouTube o archivo .mp4 público), enlace externo o sube un archivo (se guarda en el navegador
+      con IndexedDB).
+    </p>
+
+    <div class="add-grid">
+      <label>
+        <span>Tipo</span>
+        <select [(ngModel)]="newKind" name="kind">
+          <option value="video">Vídeo</option>
+          <option value="document">Documento</option>
+          <option value="link">Enlace</option>
+        </select>
+      </label>
+      <label>
+        <span>Título del material</span>
+        <input [(ngModel)]="newTitle" name="newTitle" placeholder="Ej. Clase 1" />
+      </label>
+      <label>
+        <span>URL (YouTube, mp4, PDF web…)</span>
+        <input [(ngModel)]="newUrl" name="newUrl" placeholder="https://..." />
+      </label>
+      <label class="file">
+        <span>Subir archivo (vídeo o PDF)</span>
+        <input type="file" (change)="onFile($event)" accept="video/*,application/pdf" />
+      </label>
+      <button type="button" class="btn secondary" (click)="addMaterial()">Añadir material</button>
+    </div>
+
+    <ul class="materials">
+      @for (m of session()!.materials; track m.id) {
+        <li>
+          <div>
+            <strong>{{ m.title }}</strong>
+            <span class="tag">{{ kindLabel(m.kind) }}</span>
+            @if (m.externalUrl) {
+              <p class="url">{{ m.externalUrl }}</p>
+            }
+            @if (m.blobId) {
+              <p class="url">Archivo local (blob)</p>
+            }
+          </div>
+          <button type="button" class="btn danger" (click)="removeMaterial(m.id)">Quitar</button>
+        </li>
+      }
+    </ul>
+  </section>
+}

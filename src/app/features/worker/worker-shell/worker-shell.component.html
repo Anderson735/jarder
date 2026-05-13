@@ -1,0 +1,15 @@
+<div class="shell">
+  <header class="top">
+    <a routerLink="/worker" class="brand">Jarder · Aprendizaje</a>
+    <nav>
+      <a routerLink="/worker/catalog" routerLinkActive="active">Catálogo</a>
+    </nav>
+    <div class="user">
+      <span>{{ auth.user()?.displayName }}</span>
+      <button type="button" (click)="logout()">Salir</button>
+    </div>
+  </header>
+  <main class="main">
+    <router-outlet />
+  </main>
+</div>

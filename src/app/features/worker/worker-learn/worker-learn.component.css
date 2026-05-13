@@ -1,0 +1,217 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sidebar {
+  position: sticky;
+  top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.course-title {
+  margin: 0.5rem 0 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+.side-title {
+  margin: 0.75rem 0 0.4rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}
+
+.back {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.sessions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.sess {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  padding: 0.45rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font: inherit;
+}
+
+.sess:hover {
+  background: var(--color-surface-2);
+}
+
+.sess.active {
+  border-color: #0284c7;
+  background: rgba(14, 165, 233, 0.08);
+}
+
+.idx {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  min-width: 1.25rem;
+}
+
+.t {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.done {
+  color: #0f766e;
+  font-weight: 700;
+}
+
+.eval-block {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.eval-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.eval-row {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.eval-link {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0284c7;
+  text-decoration: none;
+}
+
+.eval-link:hover {
+  text-decoration: underline;
+}
+
+.eval-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.badge-pass {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.12);
+  color: #0f766e;
+  font-weight: 600;
+}
+
+.cert-link {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+}
+
+.content {
+  min-width: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.content h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.btn {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 0.4rem 0.65rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.desc {
+  color: var(--color-muted);
+  margin: 0.5rem 0 1rem;
+  line-height: 1.5;
+}
+
+.materials {
+  display: grid;
+  gap: 1rem;
+}
+
+.block {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.block h3 {
+  margin: 0 0 0.65rem;
+  font-size: 1rem;
+}
+
+.media-frame,
+.doc-frame {
+  border: 0;
+  border-radius: 8px;
+  max-width: 100%;
+}
+
+.video-el {
+  border-radius: 8px;
+  max-height: 70vh;
+}
+
+.muted {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.doclink {
+  color: #0284c7;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.empty {
+  color: var(--color-muted);
+}

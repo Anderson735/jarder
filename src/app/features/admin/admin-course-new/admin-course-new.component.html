@@ -1,0 +1,19 @@
+<h1>Nuevo curso</h1>
+<form class="form" (ngSubmit)="save()">
+  <label>
+    <span>Título</span>
+    <input name="title" required [(ngModel)]="title" placeholder="Ej. Inducción seguridad" />
+  </label>
+  <label>
+    <span>Descripción</span>
+    <textarea name="description" rows="4" [(ngModel)]="description" placeholder="Resumen del curso"></textarea>
+  </label>
+  <label class="row">
+    <input type="checkbox" name="published" [(ngModel)]="published" />
+    <span>Publicar en el catálogo de trabajadores</span>
+  </label>
+  <div class="actions">
+    <button type="submit" class="btn primary">Crear curso</button>
+    <button type="button" class="btn ghost" (click)="back()">Cancelar</button>
+  </div>
+</form>

@@ -1,26 +1,19 @@
-<h1>Catálogo de cursos</h1>
-<p class="lead">Los administradores publican aquí los cursos disponibles para tu equipo.</p>
-
-@if (courses.publishedCourses().length === 0) {
-  <p class="empty">No hay cursos publicados todavía.</p>
-} @else {
-  <div class="grid">
-    @for (c of courses.publishedCourses(); track c.id) {
-      <article class="card">
-        @if (c.thumbnailUrl) {
-          <img [src]="c.thumbnailUrl" alt="" class="thumb" />
-        } @else {
-          <div class="thumb placeholder"></div>
-        }
-        <div class="body">
-          <h2>{{ c.title }}</h2>
-          <p>{{ c.description || 'Sin descripción' }}</p>
-          <footer>
-            <span>{{ c.sessions.length }} sesiones</span>
-            <a [routerLink]="['/worker/learn', c.id]" class="cta">Ir al curso</a>
-          </footer>
+<div>
+  <h2 style="margin-bottom:1.5rem">Catálogo de cursos</h2>
+  <div class="catalog-grid">
+    @for (course of courses(); track course.id) {
+      <div class="course-card" [routerLink]="['/worker/learn', course.id]">
+        <div class="course-thumb">
+          <span class="course-initial">{{ course.title.charAt(0) }}</span>
         </div>
-      </article>
+        <div class="course-body">
+          <div class="course-title">{{ course.title }}</div>
+          <div class="course-meta">{{ course.sessions.length }} sesiones</div>
+        </div>
+      </div>
+    }
+    @if (courses().length === 0) {
+      <p class="empty-state">No hay cursos disponibles.</p>
     }
   </div>
-}
+</div>

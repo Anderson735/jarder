@@ -1,0 +1,29 @@
+<div>
+  <div class="page-header">
+    <h2>Certificaciones emitidas</h2>
+  </div>
+
+  <div class="card" style="overflow:hidden">
+    <table>
+      <thead>
+        <tr>
+          <th>Empleado</th>
+          <th>Curso</th>
+          <th>Fecha de emisión</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (c of certificaciones(); track c.id) {
+          <tr>
+            <td>{{ empleadoNombre(c.empleadoId) }}</td>
+            <td>{{ c.nombre }}</td>
+            <td>{{ formatDate(c.issuedAt) }}</td>
+          </tr>
+        }
+        @if (certificaciones().length === 0) {
+          <tr><td colspan="3" class="empty-state">No hay certificaciones emitidas.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

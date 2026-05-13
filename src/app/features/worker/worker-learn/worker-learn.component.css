@@ -1,192 +1,77 @@
-.layout {
+.learn-layout {
   display: grid;
-  grid-template-columns: minmax(220px, 280px) 1fr;
-  gap: 1.25rem;
+  grid-template-columns: 260px 1fr;
+  gap: 1.5rem;
   align-items: start;
 }
 
-@media (max-width: 800px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
+.sessions-panel {
+  background: var(--j-surface);
+  border: 0.5px solid var(--j-border);
+  border-radius: var(--j-r-lg);
+  overflow: hidden;
 }
 
-.sidebar {
-  position: sticky;
-  top: 0.5rem;
-  padding: 0.75rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-}
-
-.course-title {
-  margin: 0.5rem 0 0.75rem;
-  font-size: 1.05rem;
-  line-height: 1.3;
-}
-
-.side-title {
-  margin: 0.75rem 0 0.4rem;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-muted);
-}
-
-.back {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-.sessions {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.35rem;
-}
-
-.sess {
-  width: 100%;
-  text-align: left;
-  display: flex;
-  gap: 0.5rem;
-  align-items: flex-start;
-  padding: 0.45rem 0.5rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid transparent;
-  background: transparent;
-  color: var(--color-text);
+.session-item {
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--j-border);
   cursor: pointer;
-  font: inherit;
-}
-
-.sess:hover {
-  background: var(--color-surface-2);
-}
-
-.sess.active {
-  border-color: #0284c7;
-  background: rgba(14, 165, 233, 0.08);
-}
-
-.idx {
-  font-size: 0.75rem;
-  color: var(--color-muted);
-  min-width: 1.25rem;
-}
-
-.t {
-  flex: 1;
-  font-size: 0.9rem;
-}
-
-.done {
-  color: #0f766e;
-  font-weight: 700;
-}
-
-.eval-block {
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border);
-}
-
-.eval-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.35rem;
-}
-
-.eval-row {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.eval-link {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #0284c7;
-  text-decoration: none;
-}
-
-.eval-link:hover {
-  text-decoration: underline;
-}
-
-.eval-badges {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
   align-items: center;
+  gap: 10px;
+  transition: background 0.1s;
 }
 
-.badge-pass {
-  font-size: 0.7rem;
-  padding: 0.1rem 0.45rem;
-  border-radius: 999px;
-  background: rgba(15, 118, 110, 0.12);
-  color: #0f766e;
-  font-weight: 600;
+.session-item:last-child {
+  border-bottom: none;
 }
 
-.cert-link {
-  font-size: 0.75rem;
-  color: var(--color-muted);
+.session-item:hover {
+  background: var(--j-surface2);
 }
 
-.content {
-  min-width: 0;
+.session-item.active {
+  background: var(--j-accent-soft);
+  border-left: 2px solid var(--j-accent);
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 0.75rem;
-  flex-wrap: wrap;
+.session-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--j-border2);
+  flex-shrink: 0;
 }
 
-.content h2 {
-  margin: 0;
-  font-size: 1.2rem;
+.session-check.done {
+  background: var(--j-accent);
+  border-color: var(--j-accent);
 }
 
-.btn {
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
-  padding: 0.4rem 0.65rem;
-  cursor: pointer;
-  font-size: 0.85rem;
+.session-title {
+  font-size: 13px;
+  color: var(--j-text);
 }
 
-.desc {
-  color: var(--color-muted);
-  margin: 0.5rem 0 1rem;
-  line-height: 1.5;
+.content-panel {
+  background: var(--j-surface);
+  border: 0.5px solid var(--j-border);
+  border-radius: var(--j-r-lg);
+  padding: 1.5rem;
+}
+
+.material-item {
+  padding: 10px 0;
+  border-bottom: 0.5px solid var(--j-border);
+}
+
+.material-item:last-child {
+  border-bottom: none;
 }
 
 .materials {
   display: grid;
-  gap: 1rem;
-}
-
-.block {
-  padding: 1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-}
-
-.block h3 {
-  margin: 0 0 0.65rem;
-  font-size: 1rem;
+  gap: 0.5rem;
 }
 
 .media-frame,
@@ -199,19 +84,4 @@ header {
 .video-el {
   border-radius: 8px;
   max-height: 70vh;
-}
-
-.muted {
-  color: var(--color-muted);
-  font-size: 0.9rem;
-}
-
-.doclink {
-  color: #0284c7;
-  font-weight: 600;
-  word-break: break-all;
-}
-
-.empty {
-  color: var(--color-muted);
 }

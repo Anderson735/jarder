@@ -1,24 +1,24 @@
 @if (!course() || !evaluation()) {
-  <p class="empty">Evaluación no disponible.</p>
+  <p class="empty-state">Evaluación no disponible.</p>
   <a routerLink="/worker/catalog">Catálogo</a>
 } @else {
-  <a [routerLink]="['/worker/learn', course()!.id]" class="back">← Volver al curso</a>
-  <h1>{{ evaluation()!.title }}</h1>
+  <a [routerLink]="['/worker/learn', course()!.id]" style="font-size:0.85rem;color:var(--j-muted);text-decoration:none">← Volver al curso</a>
+  <h2 style="margin:0.35rem 0 0.75rem">{{ evaluation()!.title }}</h2>
   @if (evaluation()!.description) {
-    <p class="lead">{{ evaluation()!.description }}</p>
+    <p style="color:var(--j-muted);margin:0 0 1rem">{{ evaluation()!.description }}</p>
   }
-  <p class="meta">
+  <p style="font-size:0.9rem;color:var(--j-muted);margin-bottom:1.25rem">
     Nota mínima para aprobar: <strong>{{ evaluation()!.passingScorePercent }}%</strong>
   </p>
 
   @if (!submitted) {
     <form (ngSubmit)="submit()">
       @for (q of evaluation()!.questions; track q.id; let i = $index) {
-        <fieldset class="card">
+        <fieldset class="exam-question">
           <legend>{{ i + 1 }}. {{ q.prompt }}</legend>
-          <div class="opts">
+          <div class="exam-options">
             @for (opt of q.choices; track $index; let oi = $index) {
-              <label class="opt">
+              <label class="exam-option">
                 <input
                   type="radio"
                   [name]="q.id"
@@ -31,23 +31,23 @@
           </div>
         </fieldset>
       }
-      <button type="submit" class="btn primary">Enviar respuestas</button>
+      <button type="submit" class="btn-primary">Enviar respuestas</button>
     </form>
   } @else {
-    <div class="result" [class.ok]="passed" [class.fail]="!passed">
-      <h2>{{ passed ? '¡Aprobaste!' : 'No aprobaste' }}</h2>
-      <p class="score">Tu puntuación: <strong>{{ scorePercent }}%</strong></p>
+    <div class="exam-result" [class.exam-passed]="passed" [class.exam-failed]="!passed">
+      <h3 style="margin:0 0 0.5rem;font-size:1.15rem">{{ passed ? '¡Aprobaste!' : 'No aprobaste' }}</h3>
+      <p style="margin:0 0 0.75rem;font-size:1rem">Tu puntuación: <strong>{{ scorePercent }}%</strong></p>
       @if (passed) {
         <p>Puedes descargar o imprimir tu certificado.</p>
-        <div class="actions">
-          <button type="button" class="btn primary" (click)="goCertificate()">Ver certificado</button>
-          <a class="btn ghost" [routerLink]="['/worker/learn', course()!.id]">Volver al curso</a>
+        <div class="form-actions" style="margin-top:0.75rem">
+          <button type="button" class="btn-primary" (click)="goCertificate()">Ver certificado</button>
+          <a class="btn-ghost" [routerLink]="['/worker/learn', course()!.id]">Volver al curso</a>
         </div>
       } @else {
         <p>Repasa el contenido e inténtalo de nuevo cuando quieras.</p>
-        <div class="actions">
-          <button type="button" class="btn primary" (click)="retry()">Intentar de nuevo</button>
-          <a class="btn ghost" [routerLink]="['/worker/learn', course()!.id]">Volver al curso</a>
+        <div class="form-actions" style="margin-top:0.75rem">
+          <button type="button" class="btn-primary" (click)="retry()">Intentar de nuevo</button>
+          <a class="btn-ghost" [routerLink]="['/worker/learn', course()!.id]">Volver al curso</a>
         </div>
       }
     </div>

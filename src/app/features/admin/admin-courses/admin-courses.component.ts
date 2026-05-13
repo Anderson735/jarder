@@ -1,20 +1,42 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { AuthService } from '../../../core/services/auth.service';
 import { CourseService } from '../../../core/services/course.service';
+import { ConfirmModalComponent } from '../../../core/components/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-admin-courses',
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmModalComponent],
   templateUrl: './admin-courses.component.html',
   styleUrl: './admin-courses.component.css',
 })
 export class AdminCoursesComponent {
-  protected readonly courses = inject(CourseService);
+  private readonly courseService = inject(CourseService);
+  private readonly auth = inject(AuthService);
 
-  remove(id: string): void {
-    if (confirm('¿Eliminar este curso y todos sus materiales almacenados?')) {
-      this.courses.deleteCourse(id);
+  readonly courses = computed(() =>
+    this.courseService.byEmpresa(this.auth.user()!.empresaId!),
+  );
+
+  readonly showConfirm = signal(false);
+  readonly pendingDeleteId = signal<string | null>(null);
+
+  requestDelete(id: string): void {
+    this.pendingDeleteId.set(id);
+    this.showConfirm.set(true);
+  }
+
+  confirmDelete(): void {
+    if (this.pendingDeleteId()) {
+      this.courseService.deleteCourse(this.pendingDeleteId()!);
+      this.pendingDeleteId.set(null);
     }
+    this.showConfirm.set(false);
+  }
+
+  cancelDelete(): void {
+    this.pendingDeleteId.set(null);
+    this.showConfirm.set(false);
   }
 }

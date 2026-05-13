@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { AuthService } from '../../../core/services/auth.service';
 import { CourseService } from '../../../core/services/course.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { CourseService } from '../../../core/services/course.service';
 })
 export class AdminCourseNewComponent {
   private readonly courses = inject(CourseService);
+  private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 
   title = '';
@@ -27,6 +29,7 @@ export class AdminCourseNewComponent {
       title: t,
       description: this.description.trim(),
       published: this.published,
+      empresaId: this.auth.user()!.empresaId!,
     });
     void this.router.navigate(['/admin/courses', c.id]);
   }

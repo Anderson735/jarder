@@ -1,23 +1,34 @@
-<div class="page">
-  <div class="card">
-    <h1>Jarder Academia</h1>
-    <p class="lead">Plataforma tipo Udemy: administración de cursos y aprendizaje para tu empresa.</p>
+<div class="page-center">
+  <div class="login-wrap">
+    <div class="login-brand">Jarder</div>
+    <p class="login-sub">Plataforma de capacitación corporativa</p>
 
     @if (auth.isAuthenticated()) {
-      <p class="hint">Ya tienes sesión como <strong>{{ auth.user()!.displayName }}</strong>.</p>
-      <div class="actions">
-        <a class="btn primary" [routerLink]="auth.isAdmin() ? '/admin' : '/worker'">Ir al panel</a>
-        <button type="button" class="btn ghost" (click)="logout()">Cerrar sesión</button>
+      <div class="card card-padded" style="text-align:center">
+        <p style="margin-bottom:1rem">Sesión activa como <strong>{{ auth.user()!.displayName }}</strong></p>
+        <a class="btn-primary" style="display:inline-block;padding:9px 24px;border-radius:var(--j-r-md);color:#e8e7f4;text-decoration:none" [routerLink]="getPanel(auth.user()!.role)">Ir al panel</a>
       </div>
     } @else {
-      <label class="field">
-        <span>Nombre para mostrar</span>
-        <input [(ngModel)]="displayName" name="displayName" placeholder="Ej. María García" />
-      </label>
-      <p class="hint">Acceso demo sin backend: elige tu rol.</p>
-      <div class="actions stack">
-        <button type="button" class="btn primary" (click)="enter('admin')">Entrar como administrador</button>
-        <button type="button" class="btn secondary" (click)="enter('worker')">Entrar como trabajador</button>
+      <div class="card card-padded">
+        <div class="form-group">
+          <label class="form-label">Correo electrónico</label>
+          <input type="email" [(ngModel)]="email" name="email" placeholder="correo@empresa.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contraseña</label>
+          <input type="password" [(ngModel)]="password" name="password" placeholder="••••••••" />
+        </div>
+        @if (errorMsg) {
+          <p class="form-error" style="margin-bottom:0.75rem">{{ errorMsg }}</p>
+        }
+        <button class="btn-primary" style="width:100%" [disabled]="loading" (click)="submit()">
+          {{ loading ? 'Verificando...' : 'Entrar' }}
+        </button>
+      </div>
+      <div class="login-hints">
+        <span class="badge badge-gray">super@jarder.com</span>
+        <span class="badge badge-gray">admin@empresa.com</span>
+        <span class="badge badge-gray">worker@empresa.com</span>
       </div>
     }
   </div>

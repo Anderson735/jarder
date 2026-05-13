@@ -1,19 +1,21 @@
-<h1>Nuevo curso</h1>
-<form class="form" (ngSubmit)="save()">
-  <label>
-    <span>Título</span>
-    <input name="title" required [(ngModel)]="title" placeholder="Ej. Inducción seguridad" />
-  </label>
-  <label>
-    <span>Descripción</span>
-    <textarea name="description" rows="4" [(ngModel)]="description" placeholder="Resumen del curso"></textarea>
-  </label>
-  <label class="row">
-    <input type="checkbox" name="published" [(ngModel)]="published" />
-    <span>Publicar en el catálogo de trabajadores</span>
-  </label>
-  <div class="actions">
-    <button type="submit" class="btn primary">Crear curso</button>
-    <button type="button" class="btn ghost" (click)="back()">Cancelar</button>
-  </div>
-</form>
+<div class="form-panel card card-padded" style="max-width:560px">
+  <h3 style="margin-bottom:1rem">Nuevo curso</h3>
+  <form (ngSubmit)="save()">
+    <div class="form-group">
+      <label class="form-label" for="title">Título</label>
+      <input id="title" name="title" required [(ngModel)]="title" placeholder="Ej. Inducción seguridad" />
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="desc">Descripción</label>
+      <textarea id="desc" name="description" rows="4" [(ngModel)]="description" placeholder="Resumen del curso"></textarea>
+    </div>
+    <div class="form-group" style="flex-direction:row;align-items:center;gap:8px">
+      <input type="checkbox" id="published" name="published" [(ngModel)]="published" style="width:auto" />
+      <label class="form-label" for="published" style="margin:0">Publicar en el catálogo de trabajadores</label>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">Crear curso</button>
+      <button type="button" class="btn-ghost" (click)="back()">Cancelar</button>
+    </div>
+  </form>
+</div>

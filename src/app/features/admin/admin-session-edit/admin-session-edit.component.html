@@ -1,69 +1,71 @@
 @if (!session()) {
-  <p class="empty">Sesión no encontrada.</p>
+  <p class="empty-state">Sesión no encontrada.</p>
   <a [routerLink]="['/admin/courses', courseId()]">Volver al curso</a>
 } @else {
-  <a [routerLink]="['/admin/courses', courseId()]" class="back">← Curso</a>
-  <h1>Editar sesión</h1>
+  <a [routerLink]="['/admin/courses', courseId()]" style="font-size:0.85rem;color:var(--j-muted);text-decoration:none">← Curso</a>
+  <h2 style="margin:0.35rem 0 1rem">Editar sesión</h2>
 
-  <form class="panel" (ngSubmit)="saveSession()">
-    <label>
-      <span>Título</span>
-      <input [(ngModel)]="title" name="title" required />
-    </label>
-    <label>
-      <span>Descripción</span>
-      <textarea rows="5" [(ngModel)]="description" name="description"></textarea>
-    </label>
-    <button type="submit" class="btn primary">Guardar sesión</button>
-  </form>
+  <div class="card card-padded" style="display:grid;gap:0.85rem;margin-bottom:1rem">
+    <form (ngSubmit)="saveSession()" style="display:grid;gap:0.85rem">
+      <div class="form-group">
+        <label class="form-label">Título</label>
+        <input [(ngModel)]="title" name="title" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descripción</label>
+        <textarea rows="5" [(ngModel)]="description" name="description"></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="justify-self:start">Guardar sesión</button>
+    </form>
+  </div>
 
-  <section class="panel">
-    <h2>Materiales</h2>
-    <p class="hint">
+  <div class="card card-padded" style="display:grid;gap:0.85rem">
+    <h3 style="margin:0">Materiales</h3>
+    <p style="margin:0;font-size:0.85rem;color:var(--j-muted)">
       Añade vídeo por URL (YouTube o archivo .mp4 público), enlace externo o sube un archivo (se guarda en el navegador
       con IndexedDB).
     </p>
 
     <div class="add-grid">
-      <label>
-        <span>Tipo</span>
+      <div class="form-group">
+        <label class="form-label">Tipo</label>
         <select [(ngModel)]="newKind" name="kind">
           <option value="video">Vídeo</option>
           <option value="document">Documento</option>
           <option value="link">Enlace</option>
         </select>
-      </label>
-      <label>
-        <span>Título del material</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Título del material</label>
         <input [(ngModel)]="newTitle" name="newTitle" placeholder="Ej. Clase 1" />
-      </label>
-      <label>
-        <span>URL (YouTube, mp4, PDF web…)</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL (YouTube, mp4, PDF web…)</label>
         <input [(ngModel)]="newUrl" name="newUrl" placeholder="https://..." />
-      </label>
-      <label class="file">
-        <span>Subir archivo (vídeo o PDF)</span>
-        <input type="file" (change)="onFile($event)" accept="video/*,application/pdf" />
-      </label>
-      <button type="button" class="btn secondary" (click)="addMaterial()">Añadir material</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Subir archivo (vídeo o PDF)</label>
+        <input type="file" (change)="onFile($event)" accept="video/*,application/pdf" style="padding:0.35rem 0" />
+      </div>
+      <button type="button" class="btn-primary btn-sm" (click)="addMaterial()">Añadir material</button>
     </div>
 
-    <ul class="materials">
+    <ul class="materials-list">
       @for (m of session()!.materials; track m.id) {
         <li>
           <div>
             <strong>{{ m.title }}</strong>
-            <span class="tag">{{ kindLabel(m.kind) }}</span>
+            <span class="mat-tag">{{ kindLabel(m.kind) }}</span>
             @if (m.externalUrl) {
-              <p class="url">{{ m.externalUrl }}</p>
+              <p class="mat-url">{{ m.externalUrl }}</p>
             }
             @if (m.blobId) {
-              <p class="url">Archivo local (blob)</p>
+              <p class="mat-url">Archivo local (blob)</p>
             }
           </div>
-          <button type="button" class="btn danger" (click)="removeMaterial(m.id)">Quitar</button>
+          <button type="button" class="btn-danger btn-sm" (click)="removeMaterial(m.id)">Quitar</button>
         </li>
       }
     </ul>
-  </section>
+  </div>
 }

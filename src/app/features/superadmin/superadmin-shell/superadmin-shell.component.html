@@ -1,0 +1,16 @@
+<div class="shell">
+  <nav class="j-nav">
+    <span class="j-nav-brand">Jarder — Super Admin</span>
+    <div class="j-nav-links">
+      <a routerLink="/superadmin/empresas" routerLinkActive="active-link">Empresas</a>
+    </div>
+    <div class="j-nav-user">
+      <span class="j-avatar">{{ auth.user()!.displayName.slice(0,2).toUpperCase() }}</span>
+      <span class="j-nav-name">{{ auth.user()!.displayName }}</span>
+      <button class="btn-sm btn-ghost" (click)="logout()">Salir</button>
+    </div>
+  </nav>
+  <div class="shell-content">
+    <router-outlet />
+  </div>
+</div>

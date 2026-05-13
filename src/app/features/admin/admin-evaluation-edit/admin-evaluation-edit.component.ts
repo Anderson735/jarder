@@ -48,7 +48,7 @@ export class AdminEvaluationEditComponent {
 
   private emptyEvaluation(courseId: string): CourseEvaluation {
     return {
-      id: '',
+      id: crypto.randomUUID(),
       courseId,
       title: '',
       description: '',
@@ -103,10 +103,8 @@ export class AdminEvaluationEditComponent {
         return;
       }
     }
-    const id = this.draft.id || crypto.randomUUID();
     const toSave: CourseEvaluation = {
       ...this.draft,
-      id,
       courseId: this.draft.courseId,
       title,
       description: this.draft.description.trim(),
@@ -118,10 +116,10 @@ export class AdminEvaluationEditComponent {
     };
     this.courses.upsertEvaluation(toSave.courseId, toSave);
     if (this.isNew) {
-      void this.router.navigate(['/admin/courses', toSave.courseId, 'evaluations', toSave.id], {
+      void this.router.navigate(['/admin/courses', toSave.courseId], {
         replaceUrl: true,
       });
-      this.isNew = false;
+      return;
     }
     this.draft = structuredClone(toSave);
   }

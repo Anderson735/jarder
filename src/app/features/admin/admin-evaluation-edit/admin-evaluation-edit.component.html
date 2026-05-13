@@ -1,67 +1,63 @@
 @if (!draft) {
-  <p class="empty">No se pudo cargar la evaluación.</p>
+  <p class="empty-state">No se pudo cargar la evaluación.</p>
   <a routerLink="/admin/courses">Volver</a>
 } @else {
-  <a [routerLink]="['/admin/courses', draft.courseId]" class="back">← {{ courseTitle() }}</a>
-  <h1>{{ isNew ? 'Nueva evaluación' : 'Editar evaluación' }}</h1>
-  <p class="hint">
+  <a [routerLink]="['/admin/courses', draft.courseId]" style="font-size:0.85rem;color:var(--j-muted);text-decoration:none">← {{ courseTitle() }}</a>
+  <h2 style="margin:0.35rem 0 0.25rem">{{ isNew ? 'Nueva evaluación' : 'Editar evaluación' }}</h2>
+  <p style="margin:0 0 1rem;font-size:0.9rem;color:var(--j-muted);max-width:65ch">
     Define preguntas de opción múltiple y la nota mínima para aprobar. Los trabajadores que aprueben podrán ver su
     certificado.
   </p>
 
-  <form class="panel" (ngSubmit)="save()">
-    <label>
-      <span>Título</span>
-      <input name="title" [(ngModel)]="draft.title" required />
-    </label>
-    <label>
-      <span>Descripción</span>
-      <textarea name="desc" rows="3" [(ngModel)]="draft.description"></textarea>
-    </label>
-    <label>
-      <span>Nota mínima para aprobar (%)</span>
-      <input
-        type="number"
-        name="pass"
-        min="0"
-        max="100"
-        [(ngModel)]="draft.passingScorePercent"
-      />
-    </label>
+  <div class="form-panel card card-padded" style="display:grid;gap:1rem;max-width:720px">
+    <form (ngSubmit)="save()" style="display:grid;gap:1rem">
+      <div class="form-group">
+        <label class="form-label">Título</label>
+        <input name="title" [(ngModel)]="draft.title" required />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descripción</label>
+        <textarea name="desc" rows="3" [(ngModel)]="draft.description"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nota mínima para aprobar (%)</label>
+        <input type="number" name="pass" min="0" max="100" [(ngModel)]="draft.passingScorePercent" />
+      </div>
 
-    <h2>Preguntas</h2>
-    <button type="button" class="btn secondary" (click)="addQuestion()">Añadir pregunta</button>
+      <h3 style="margin:0.5rem 0 0">Preguntas</h3>
+      <button type="button" class="btn-primary btn-sm" style="justify-self:start" (click)="addQuestion()">Añadir pregunta</button>
 
-    @for (q of draft.questions; track q.id; let qi = $index) {
-      <fieldset class="question">
-        <legend>Pregunta {{ qi + 1 }}</legend>
-        <label>
-          <span>Enunciado</span>
-          <textarea rows="2" [(ngModel)]="q.prompt" [name]="'p' + q.id" required></textarea>
-        </label>
-        <div class="choices">
-          @for (opt of q.choices; track $index; let oi = $index) {
-            <label class="choice">
-              <span>Opción {{ oi + 1 }}</span>
-              <div class="choice-row">
-                <input type="radio" [name]="'ok' + q.id" [value]="oi" [(ngModel)]="q.correctIndex" />
-                <input type="text" [(ngModel)]="q.choices[oi]" [name]="'c' + q.id + '-' + oi" />
+      @for (q of draft.questions; track q.id; let qi = $index) {
+        <fieldset class="question-card">
+          <legend>Pregunta {{ qi + 1 }}</legend>
+          <div class="form-group">
+            <label class="form-label">Enunciado</label>
+            <textarea rows="2" [(ngModel)]="q.prompt" [name]="'p' + q.id" required></textarea>
+          </div>
+          <div class="choices">
+            @for (opt of q.choices; track $index; let oi = $index) {
+              <div class="form-group">
+                <label class="form-label">Opción {{ oi + 1 }}</label>
+                <div class="choice-row">
+                  <input type="radio" [name]="'ok' + q.id" [value]="oi" [(ngModel)]="q.correctIndex" style="width:auto" />
+                  <input type="text" [(ngModel)]="q.choices[oi]" [name]="'c' + q.id + '-' + oi" />
+                </div>
               </div>
-            </label>
+            }
+          </div>
+          <p style="margin:0;font-size:0.8rem;color:var(--j-muted)">Marca el círculo junto a la opción correcta.</p>
+          @if (draft.questions.length > 1) {
+            <button type="button" class="btn-danger btn-sm" style="justify-self:start" (click)="removeQuestion(q)">Eliminar pregunta</button>
           }
-        </div>
-        <p class="radio-hint">Marca el círculo junto a la opción correcta.</p>
-        @if (draft.questions.length > 1) {
-          <button type="button" class="btn danger" (click)="removeQuestion(q)">Eliminar pregunta</button>
-        }
-      </fieldset>
-    }
-
-    <div class="actions">
-      <button type="submit" class="btn primary">Guardar evaluación</button>
-      @if (!isNew) {
-        <button type="button" class="btn danger" (click)="removeEvaluation()">Eliminar evaluación</button>
+        </fieldset>
       }
-    </div>
-  </form>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Guardar evaluación</button>
+        @if (!isNew) {
+          <button type="button" class="btn-danger" (click)="removeEvaluation()">Eliminar evaluación</button>
+        }
+      </div>
+    </form>
+  </div>
 }

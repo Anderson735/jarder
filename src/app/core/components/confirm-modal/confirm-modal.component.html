@@ -1,0 +1,9 @@
+<div class="modal-backdrop">
+  <div class="modal-box card card-padded">
+    <p class="modal-message">{{ message }}</p>
+    <div class="modal-actions">
+      <button [class]="danger ? 'btn-danger' : 'btn-primary'" (click)="confirmed.emit()">{{ confirmLabel }}</button>
+      <button class="btn-ghost" (click)="cancelled.emit()">{{ cancelLabel }}</button>
+    </div>
+  </div>
+</div>

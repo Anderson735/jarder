@@ -1,0 +1,33 @@
+<div>
+  <div class="page-header">
+    <h2>Empleados de mi empresa</h2>
+  </div>
+
+  <div class="card" style="overflow:hidden">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Identificación</th>
+          <th>Tipo</th>
+          <th>Sexo</th>
+          <th>Teléfono</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of empleados(); track e.id) {
+          <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.identificacion }}</td>
+            <td>{{ e.tipoIdentificacion }}</td>
+            <td>{{ e.sexo }}</td>
+            <td>{{ e.telefono }}</td>
+          </tr>
+        }
+        @if (empleados().length === 0) {
+          <tr><td colspan="5" class="empty-state">No hay empleados en esta empresa.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

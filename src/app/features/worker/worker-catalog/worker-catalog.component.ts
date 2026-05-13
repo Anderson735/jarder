@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { AuthService } from '../../../core/services/auth.service';
 import { CourseService } from '../../../core/services/course.service';
 
 @Component({
@@ -10,5 +11,10 @@ import { CourseService } from '../../../core/services/course.service';
   styleUrl: './worker-catalog.component.css',
 })
 export class WorkerCatalogComponent {
-  protected readonly courses = inject(CourseService);
+  private readonly courseService = inject(CourseService);
+  private readonly auth = inject(AuthService);
+
+  readonly courses = computed(() =>
+    this.courseService.publishedByEmpresa(this.auth.user()!.empresaId!),
+  );
 }

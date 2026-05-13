@@ -1,45 +1,23 @@
-.back {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-h1 {
-  margin: 0.35rem 0 0.75rem;
-  font-size: 1.25rem;
-}
-
-.lead {
-  color: var(--color-muted);
-  margin: 0 0 1rem;
-}
-
-.meta {
-  font-size: 0.9rem;
-  color: var(--color-muted);
-  margin-bottom: 1.25rem;
-}
-
-.card {
+.exam-question {
   margin: 0 0 1rem;
   padding: 1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border-radius: var(--j-r-md);
+  border: 0.5px solid var(--j-border);
+  background: var(--j-surface);
 }
 
-.card legend {
+.exam-question legend {
   font-weight: 600;
   padding: 0 0.35rem;
 }
 
-.opts {
+.exam-options {
   display: grid;
   gap: 0.45rem;
   margin-top: 0.5rem;
 }
 
-.opt {
+.exam-option {
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
@@ -47,63 +25,19 @@ h1 {
   cursor: pointer;
 }
 
-.btn {
-  display: inline-block;
-  border-radius: var(--radius-sm);
-  padding: 0.55rem 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid transparent;
-  font-size: 0.9rem;
-  text-decoration: none;
-  text-align: center;
-}
-
-.btn.primary {
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
-  color: #fff;
-}
-
-.btn.ghost {
-  background: transparent;
-  border-color: var(--color-border);
-  color: var(--color-text);
-}
-
-.result {
+.exam-result {
   padding: 1.25rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border-radius: var(--j-r-md);
+  border: 0.5px solid var(--j-border);
+  background: var(--j-surface);
 }
 
-.result.ok {
-  border-color: #0f766e;
-  background: rgba(15, 118, 110, 0.06);
+.exam-passed {
+  border-color: var(--j-green);
+  background: var(--j-green-soft);
 }
 
-.result.fail {
-  border-color: #b91c1c;
-  background: rgba(185, 28, 28, 0.06);
-}
-
-.result h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.15rem;
-}
-
-.score {
-  margin: 0 0 0.75rem;
-  font-size: 1rem;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 0.75rem;
-}
-
-.empty {
-  color: var(--color-muted);
+.exam-failed {
+  border-color: rgba(180, 50, 50, 0.4);
+  background: var(--j-red-soft);
 }

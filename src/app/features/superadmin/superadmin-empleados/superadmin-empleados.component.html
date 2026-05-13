@@ -1,0 +1,104 @@
+<div>
+  <div class="page-header">
+    <h2>Empleados</h2>
+    <button class="btn-primary btn-sm" (click)="openNew()">+ Nuevo empleado</button>
+  </div>
+
+  <div class="card" style="overflow:hidden">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Identificación</th>
+          <th>Tipo</th>
+          <th>Empresa</th>
+          <th>Sexo</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of empleados(); track e.id) {
+          <tr>
+            <td>{{ e.nombre }}</td>
+            <td>{{ e.identificacion }}</td>
+            <td>{{ e.tipoIdentificacion }}</td>
+            <td>{{ empresaNombre(e.empresaId) }}</td>
+            <td>{{ e.sexo }}</td>
+            <td>{{ e.telefono }}</td>
+            <td>
+              <button class="action-btn edit" (click)="openEdit(e)">Editar</button>
+              <button class="action-btn delete" (click)="requestDelete(e.id)">Eliminar</button>
+            </td>
+          </tr>
+        }
+        @if (empleados().length === 0) {
+          <tr><td colspan="7" class="empty-state">No hay empleados registrados.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showConfirm()) {
+    <app-confirm-modal
+      message="¿Estás seguro de que deseas eliminar este empleado? Esta acción no se puede deshacer."
+      confirmLabel="Eliminar"
+      [danger]="true"
+      (confirmed)="confirmDelete()"
+      (cancelled)="cancelDelete()" />
+  }
+
+  @if (showForm()) {
+    <div class="form-panel card card-padded" style="margin-top:1rem">
+      <h3 style="margin-bottom:1rem">{{ editingId() ? 'Editar empleado' : 'Nuevo empleado' }}</h3>
+
+      <div class="form-group">
+        <label class="form-label">Nombre</label>
+        <input [(ngModel)]="form().nombre" name="nombre" type="text" placeholder="Ej. Juan Pérez" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Identificación</label>
+        <input [(ngModel)]="form().identificacion" name="identificacion" type="text" placeholder="Ej. 1234567890" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tipo identificación</label>
+        <select [(ngModel)]="form().tipoIdentificacion" name="tipoIdentificacion">
+          <option value="CC">CC</option>
+          <option value="CE">CE</option>
+          <option value="TI">TI</option>
+          <option value="PP">PP</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Empresa</label>
+        <select [(ngModel)]="form().empresaId" name="empresaId">
+          <option value="">Seleccione una empresa</option>
+          @for (emp of empresas(); track emp.id) {
+            <option [value]="emp.id">{{ emp.nit }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sexo</label>
+        <select [(ngModel)]="form().sexo" name="sexo">
+          <option value="M">Masculino</option>
+          <option value="F">Femenino</option>
+          <option value="O">Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input [(ngModel)]="form().telefono" name="telefono" type="text" placeholder="Ej. 3001234567" />
+      </div>
+
+      @if (error()) {
+        <p class="form-error">{{ error() }}</p>
+      }
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="save()">Guardar</button>
+        <button class="btn-ghost" (click)="cancel()">Cancelar</button>
+      </div>
+    </div>
+  }
+</div>

@@ -18,7 +18,10 @@ export function roleGuard(expected: UserRole): CanActivateFn {
       return router.createUrlTree(['/login']);
     }
     if (auth.role() !== expected) {
-      return router.createUrlTree([expected === 'admin' ? '/worker' : '/admin']);
+      if (auth.role() === 'superadmin') return router.createUrlTree(['/superadmin']);
+      if (auth.role() === 'admin') return router.createUrlTree(['/admin']);
+      if (auth.role() === 'worker') return router.createUrlTree(['/worker']);
+      return router.createUrlTree(['/login']);
     }
     return true;
   };

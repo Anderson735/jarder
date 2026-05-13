@@ -1,0 +1,72 @@
+<div>
+  <div class="page-header">
+    <h2>Empresas</h2>
+    <button class="btn-primary btn-sm" (click)="openNew()">+ Nueva empresa</button>
+  </div>
+
+  <div class="card" style="overflow:hidden">
+    <table>
+      <thead>
+        <tr>
+          <th>NIT</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of empresas(); track e.id) {
+          <tr>
+            <td>{{ e.nit }}</td>
+            <td>{{ e.direccion }}</td>
+            <td>{{ e.telefono }}</td>
+            <td>
+              <button class="action-btn edit" (click)="openEdit(e)">Editar</button>
+              <button class="action-btn delete" (click)="requestDelete(e.id)">Eliminar</button>
+            </td>
+          </tr>
+        }
+        @if (empresas().length === 0) {
+          <tr><td colspan="4" class="empty-state">No hay empresas registradas.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showConfirm()) {
+    <app-confirm-modal
+      message="¿Estás seguro de que deseas eliminar esta empresa? Esta acción no se puede deshacer."
+      confirmLabel="Eliminar"
+      [danger]="true"
+      (confirmed)="confirmDelete()"
+      (cancelled)="cancelDelete()" />
+  }
+
+  @if (showForm()) {
+    <div class="form-panel card card-padded" style="margin-top:1rem">
+      <h3 style="margin-bottom:1rem">{{ editingId() ? 'Editar empresa' : 'Nueva empresa' }}</h3>
+
+      <div class="form-group">
+        <label class="form-label">NIT</label>
+        <input [(ngModel)]="form().nit" name="nit" type="text" placeholder="Ej. 900123456-1" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dirección</label>
+        <input [(ngModel)]="form().direccion" name="direccion" type="text" placeholder="Ej. Calle 10 # 5-20, Bogotá" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input [(ngModel)]="form().telefono" name="telefono" type="text" placeholder="Ej. 6012345678" />
+      </div>
+
+      @if (error()) {
+        <p class="form-error">{{ error() }}</p>
+      }
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="save()">Guardar</button>
+        <button class="btn-ghost" (click)="cancel()">Cancelar</button>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,41 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 1.25rem;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  border-radius: var(--j-r-sm);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.action-btn.edit {
+  color: var(--j-accent2);
+}
+
+.action-btn.edit:hover {
+  background: var(--j-accent-soft);
+}
+
+.action-btn.delete {
+  color: var(--j-red-text);
+}
+
+.action-btn.delete:hover {
+  background: var(--j-red-soft);
+}

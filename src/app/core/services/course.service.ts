@@ -88,7 +88,15 @@ export class CourseService {
     return c?.published ? c : undefined;
   }
 
-  upsertCourse(partial: Partial<Course> & Pick<Course, 'title'>): Course {
+  byEmpresa(empresaId: string): Course[] {
+    return this.allCourses().filter((c) => c.empresaId === empresaId);
+  }
+
+  publishedByEmpresa(empresaId: string): Course[] {
+    return this.publishedCourses().filter((c) => c.empresaId === empresaId);
+  }
+
+  upsertCourse(partial: Partial<Course> & Pick<Course, 'title' | 'empresaId'>): Course {
     const list = this.coursesSignal();
     const ts = nowIso();
     let next: Course[];
@@ -113,6 +121,8 @@ export class CourseService {
         description: partial.description ?? '',
         thumbnailUrl: partial.thumbnailUrl,
         published: partial.published ?? false,
+        empresaId: partial.empresaId,
+        certificacionId: partial.certificacionId ?? null,
         createdAt: ts,
         updatedAt: ts,
         sessions: partial.sessions ?? [],

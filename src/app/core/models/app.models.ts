@@ -1,10 +1,38 @@
-export type UserRole = 'admin' | 'worker';
+export type UserRole = 'superadmin' | 'admin' | 'worker';
+
+export interface Empresa {
+  id: string;
+  nit: string;
+  direccion: string;
+  telefono: string;
+}
+
+export interface Empleado {
+  id: string;
+  empresaId: string;
+  identificacion: string;
+  tipoIdentificacion: 'CC' | 'CE' | 'TI' | 'PP';
+  sexo: 'M' | 'F' | 'O';
+  telefono: string;
+  nombre: string;
+}
 
 export interface AppUser {
   id: string;
   email: string;
   displayName: string;
   role: UserRole;
+  empresaId: string | null;
+  empleadoId: string | null;
+}
+
+export interface Certificacion {
+  id: string;
+  empleadoId: string;
+  empresaId: string;
+  nombre: string;
+  cursoId: string;
+  issuedAt: string;
 }
 
 export type MaterialKind = 'video' | 'document' | 'link';
@@ -53,6 +81,8 @@ export interface Course {
   description: string;
   thumbnailUrl?: string;
   published: boolean;
+  empresaId: string;
+  certificacionId: string | null;
   createdAt: string;
   updatedAt: string;
   sessions: CourseSession[];

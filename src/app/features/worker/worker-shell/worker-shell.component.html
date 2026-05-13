@@ -1,15 +1,16 @@
 <div class="shell">
-  <header class="top">
-    <a routerLink="/worker" class="brand">Jarder · Aprendizaje</a>
-    <nav>
-      <a routerLink="/worker/catalog" routerLinkActive="active">Catálogo</a>
-    </nav>
-    <div class="user">
-      <span>{{ auth.user()?.displayName }}</span>
-      <button type="button" (click)="logout()">Salir</button>
+  <nav class="j-nav">
+    <span class="j-nav-brand">Jarder — Aprendizaje</span>
+    <div class="j-nav-links">
+      <a routerLink="/worker/catalog" routerLinkActive="active-link">Catálogo</a>
     </div>
-  </header>
-  <main class="main">
+    <div class="j-nav-user">
+      <span class="j-avatar">{{ auth.user()!.displayName.slice(0,2).toUpperCase() }}</span>
+      <span class="j-nav-name">{{ auth.user()!.displayName }}</span>
+      <button class="btn-sm btn-ghost" (click)="logout()">Salir</button>
+    </div>
+  </nav>
+  <div class="shell-content">
     <router-outlet />
-  </main>
+  </div>
 </div>

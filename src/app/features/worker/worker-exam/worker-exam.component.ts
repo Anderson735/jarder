@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 
 import type { EvaluationQuestion } from '../../../core/models/app.models';
 import { AuthService } from '../../../core/services/auth.service';
+import { CertificacionService } from '../../../core/services/certificacion.service';
 import { CourseService } from '../../../core/services/course.service';
 import { EvaluationResultService } from '../../../core/services/evaluation-result.service';
 
@@ -21,6 +22,7 @@ export class WorkerExamComponent {
   private readonly courses = inject(CourseService);
   private readonly auth = inject(AuthService);
   private readonly results = inject(EvaluationResultService);
+  private readonly certificacion = inject(CertificacionService);
 
   private readonly courseId = toSignal(this.route.paramMap.pipe(map((p) => p.get('courseId'))), {
     initialValue: null,
@@ -112,6 +114,15 @@ export class WorkerExamComponent {
       scorePercent: this.scorePercent,
       completedAt: new Date().toISOString(),
     });
+
+    if (this.passed) {
+      this.certificacion.issue({
+        empleadoId: user.empleadoId ?? user.id,
+        empresaId: user.empresaId!,
+        nombre: c.title + ' — ' + ev.title,
+        cursoId: c.id,
+      });
+    }
   }
 
   goCertificate(): void {

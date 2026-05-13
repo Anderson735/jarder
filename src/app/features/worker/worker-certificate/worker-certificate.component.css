@@ -1,4 +1,4 @@
-.toolbar {
+.cert-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -6,32 +6,16 @@
   margin-bottom: 1rem;
 }
 
-.toolbar a {
-  color: var(--color-muted);
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.btn {
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-text);
-  padding: 0.45rem 0.75rem;
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
 .certificate {
   max-width: 720px;
   margin: 0 auto;
   padding: 2.5rem 2rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--j-r-lg);
   border: 2px solid #c4b08a;
   background: linear-gradient(180deg, #fffdf7 0%, #f7f2e4 100%);
   color: #1a1a1a;
   text-align: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -73,11 +57,6 @@
   font-weight: 600;
 }
 
-.score {
-  margin: 1.25rem 0 0.5rem;
-  font-size: 1rem;
-}
-
 footer {
   margin-top: 2rem;
   padding-top: 1rem;
@@ -93,10 +72,6 @@ footer {
   margin: 0.35rem 0 0;
   font-size: 0.8rem;
   color: #64748b;
-}
-
-.empty {
-  color: var(--color-muted);
 }
 
 @media print {

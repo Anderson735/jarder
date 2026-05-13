@@ -1,0 +1,94 @@
+<div>
+  <div class="page-header">
+    <h2>Usuarios</h2>
+    <button class="btn-primary btn-sm" (click)="openNew()">+ Nuevo usuario</button>
+  </div>
+
+  <div class="card" style="overflow:hidden">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Email</th>
+          <th>Rol</th>
+          <th>Empleado vinculado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (u of usuarios(); track u.id) {
+          <tr>
+            <td>{{ u.displayName }}</td>
+            <td>{{ u.email }}</td>
+            <td>
+              <span class="badge" [class.badge-purple]="u.role === 'admin'" [class.badge-gray]="u.role === 'worker'">
+                {{ u.role === 'admin' ? 'Administrador' : 'Trabajador' }}
+              </span>
+            </td>
+            <td>{{ empleadoNombre(u.empleadoId ?? '') }}</td>
+            <td>
+              <button class="action-btn edit" (click)="openEdit(u)">Editar</button>
+              <button class="action-btn delete" (click)="requestDelete(u.id)">Eliminar</button>
+            </td>
+          </tr>
+        }
+        @if (usuarios().length === 0) {
+          <tr><td colspan="5" class="empty-state">No hay usuarios registrados.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showConfirm()) {
+    <app-confirm-modal
+      message="¿Estás seguro de que deseas eliminar este usuario? Esta acción no se puede deshacer."
+      confirmLabel="Eliminar"
+      [danger]="true"
+      (confirmed)="confirmDelete()"
+      (cancelled)="cancelDelete()" />
+  }
+
+  @if (showForm()) {
+    <div class="form-panel card card-padded" style="margin-top:1rem">
+      <h3 style="margin-bottom:1rem">{{ editingId() ? 'Editar usuario' : 'Nuevo usuario' }}</h3>
+
+      <div class="form-group">
+        <label class="form-label">Nombre</label>
+        <input name="displayName" [(ngModel)]="form().displayName" type="text" placeholder="Ej. Juan Pérez" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input name="email" [(ngModel)]="form().email" type="email" placeholder="Ej. juan@empresa.com" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Contraseña</label>
+        <input name="password" [(ngModel)]="form().password" type="password" [placeholder]="editingId() ? 'Dejar vacío para no cambiar' : '••••••••'" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Rol</label>
+        <select name="role" [(ngModel)]="form().role">
+          <option value="worker">Trabajador</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Empleado vinculado</label>
+        <select name="empleadoId" [(ngModel)]="form().empleadoId">
+          <option value="">Sin vincular</option>
+          @for (e of empleados(); track e.id) {
+            <option [value]="e.id">{{ e.nombre }}</option>
+          }
+        </select>
+      </div>
+
+      @if (error()) {
+        <p class="form-error">{{ error() }}</p>
+      }
+
+      <div class="form-actions">
+        <button class="btn-primary" (click)="save()">Guardar</button>
+        <button class="btn-ghost" (click)="cancel()">Cancelar</button>
+      </div>
+    </div>
+  }
+</div>
